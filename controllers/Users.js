@@ -1,6 +1,6 @@
 import { usersModel } from "./../models/Users.js";
 import bcrypt from "bcrypt";
-import { sendCookie } from "../utils/services.js";
+import { sendCookie,sendRegMail } from "../utils/services.js";
 
 export const getAllUsers = async (req, res) => {
   const user = await usersModel.find({});
@@ -52,6 +52,7 @@ export const signup = async (req, res) => {
     password: hashedPassword,
   });
   sendCookie(user, res, "User created", 201);
+  sendRegMail(user.firstname,new Date().toLocaleDateString(),process.env.FROM,process.env.PASS,user.email,"Registration successfull");
 };
 
 export const getUser = async (req, res) => {
