@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 import ejs from "ejs";
 import path from "path";
 
+//Send Cookies 
 export const sendCookie = (user, res, message, status = 200) => {
   const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY);
   res
@@ -16,9 +17,11 @@ export const sendCookie = (user, res, message, status = 200) => {
     .json({
       success: true,
       message,
+      user,
     });
 };
 
+// Sends mail on successful registration
 export const sendRegMail = (name, date,from,pass,recipient,sub) => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
