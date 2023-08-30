@@ -52,7 +52,7 @@ export const updateProfilePhoto = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ success: false, message: "Request failed" });
   }
-  const {  user,imagename } = req;
+  let {  user,imagename } = req;
   const result = await usersModel.findByIdAndUpdate(
     { _id: user._id },
     {
