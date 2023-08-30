@@ -31,9 +31,8 @@ export const updateProfile = async (req, res) => {
 export const updateProfilePhoto = async () => {};
 
 export const deleteProfile = async (req, res) => {
-  const { id } = req.body;
-  let res = await usersModel.findByIdAndDelete({ _id:id });
-  if (!user) {
+  let res = await usersModel.findByIdAndDelete({ _id:req.user._id });
+  if (!res) {
     return res.status(404).json({
       success: false,
       message: "unable to delete",
