@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { errorMiddleware } from "./middlewares/error.js";
 import usersRouter from "./routes/Users.js";
+import settingRouter from "./routes/Setting.js";
 
 // App
 export const app = express();
@@ -24,6 +25,7 @@ app.use(
 
 // Routes
 app.use("/users", usersRouter);
+app.use("/setting", settingRouter);
 
 //environment variables
 configDotenv({
