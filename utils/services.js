@@ -2,8 +2,9 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import ejs from "ejs";
 import path from "path";
+import multer from "multer";
 
-//Send Cookies 
+//Send Cookies
 export const sendCookie = (user, res, message, status = 200) => {
   const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY);
   res
@@ -22,7 +23,7 @@ export const sendCookie = (user, res, message, status = 200) => {
 };
 
 // Sends mail on successful registration
-export const sendRegMail = (name, date,from,pass,recipient,sub) => {
+export const sendRegMail = (name, date, from, pass, recipient, sub) => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
     service: "Gmail", // e.g., 'Gmail', 'Outlook'
@@ -42,7 +43,7 @@ export const sendRegMail = (name, date,from,pass,recipient,sub) => {
   const mailOptions = {
     from: from,
     to: recipient,
-    subject:sub,
+    subject: sub,
   };
 
   // Data to be passed into the EJS template
@@ -71,3 +72,15 @@ export const sendRegMail = (name, date,from,pass,recipient,sub) => {
     });
   });
 };
+
+///////////////////////////Uploads images to a dir///////////////////////////////////
+// Define the storage for uploaded files using Multer
+const storage = multer.diskStorage({
+  destination: 'public/profile_images/',
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    req.imagename =file.fieldname + '-' + Date.now() + path.extname(file.originalname);
+  },
+});
+// Create an instance of Multer with the storage configuration
+export const upload = multer({ storage: storage });

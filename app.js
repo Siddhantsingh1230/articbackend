@@ -7,6 +7,7 @@ import { errorMiddleware } from "./middlewares/error.js";
 import usersRouter from "./routes/Users.js";
 import settingRouter from "./routes/Setting.js";
 
+
 // App
 export const app = express();
 
@@ -39,6 +40,8 @@ app.get("/", (req, res) => {
     message: "online",
   });
 });
+
+
 
 //Error middlewares
 app.use(errorMiddleware);
