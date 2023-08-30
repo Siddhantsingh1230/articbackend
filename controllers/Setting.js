@@ -1,4 +1,6 @@
 import { usersModel } from "./../models/Users.js";
+import fs from "fs";  
+import path from "path";  
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email, changeEmailTo } = req.body;
@@ -37,7 +39,9 @@ export const deleteProfile = async (req, res) => {
       message: "unable to delete",
     });
   }
-
+  if(req.user.profileImageURL!=="user_placeholder.png"){
+    fs.unlinkSync(path.join(path.resolve(),`public/profile_images/{req.user.profileImageURL}`));
+  }
   res
     .status(200)
     .cookie("token", "", {
