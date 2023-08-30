@@ -29,3 +29,23 @@ export const updateProfile = async (req, res) => {
   res.status(200).json({ success: true, message: "Profile updated ", user });
 };
 export const updateProfilePhoto = async () => {};
+
+export const deleteProfile = async (req, res) => {
+  const { id } = req.body;
+  let res = await usersModel.findByIdAndDelete({ _id:id });
+  if (!user) {
+    return res.status(404).json({
+      success: false,
+      message: "unable to delete",
+    });
+  }
+  
+  res
+    .status(200)
+    .cookie("token", "", {
+      expires: new Date(Date.now()),
+      sameSite: "none",
+      secure: true,
+    })
+    .json({ success: true, message: "Profile deleted" });
+};
