@@ -40,7 +40,7 @@ export const deleteProfile = async (req, res) => {
     });
   }
   if(req.user.profileImageURL!=="user_placeholder.png"){
-    fs.unlinkSync(path.join(path.resolve(),`public/profile_images/{req.user.profileImageURL}`));
+    fs.unlinkSync(path.join(path.resolve(),`public/profile_images/${req.user.profileImageURL}`));
   }
   res
     .status(200)
