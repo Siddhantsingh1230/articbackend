@@ -1,7 +1,7 @@
 import { usersModel } from "./../models/Users.js";
 
 export const updateProfile = async (req, res) => {
-  const { firstname, lastname, email } = req.body;
+  const { firstname, lastname, email, changeEmailTo } = req.body;
   let user = await usersModel.findOne({ email });
   if (!user) {
     return res.status(404).json({
@@ -15,7 +15,7 @@ export const updateProfile = async (req, res) => {
       $set: {
         firstname,
         lastname,
-        email,
+        changeEmailTo,
       },
     }
   );
