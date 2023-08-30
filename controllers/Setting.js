@@ -15,7 +15,7 @@ export const updateProfile = async (req, res) => {
       $set: {
         firstname,
         lastname,
-        changeEmailTo,
+        email:changeEmailTo,
       },
     }
   );
