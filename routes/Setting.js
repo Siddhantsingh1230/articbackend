@@ -5,6 +5,6 @@ import { updateProfile, updateProfilePhoto ,deleteProfile } from "../controllers
 
 router.post("/update", isAuthenticated, updateProfile);
 router.post("/userphoto", isAuthenticated, updateProfilePhoto);
-router.post("/deleteprofile", isAuthenticated, deleteProfile);
+router.get("/deleteprofile", isAuthenticated, deleteProfile);
 
 export default router;
