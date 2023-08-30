@@ -41,6 +41,7 @@ export const deleteProfile = async (req, res) => {
   }
   if(req.user.profileImageURL!=="user_placeholder.png"){
     fs.unlinkSync(path.join(path.resolve(),`public/profile_images/${req.user.profileImageURL}`));
+    console.log("profile image cleaned");
   }
   res
     .status(200)
@@ -57,6 +58,11 @@ export const updateProfilePhoto = async (req, res) => {
     return res.status(400).json({ success: false, message: "Request failed" });
   }
   let {  user,imagename } = req;
+  
+  if(req.user.profileImageURL!=="user_placeholder.png"){
+    fs.unlinkSync(path.join(path.resolve(),`public/profile_images/${req.user.profileImageURL}`));
+    console.log("profile image cleaned");
+  }
   const result = await usersModel.findByIdAndUpdate(
     { _id: user._id },
     {
