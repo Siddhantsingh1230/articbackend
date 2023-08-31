@@ -6,11 +6,11 @@ import path from "path";
 // Create an S3 instance
 const s3 = new AWS.S3();
 // Configure AWS with your credentials
-AWS.config.update({
-    accessKeyId: ,
-    secretAccessKey: 'GBB9/s2KKdnC5EC8wZyJw9X38Ye40JP5X4AWd7xB',
-    region: 'ap-northeast-2', // Replace with your AWS region
-  });
+// AWS.config.update({
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.WS_SECRET_ACCESS_KEY,
+//     region: process.env.AWS_REGION, 
+//   });
 
 export const uploadImage = multer({
   storage: multerS3({
