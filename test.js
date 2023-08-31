@@ -11,9 +11,9 @@ const S3_BUCKET_NAME = "cyclic-silly-cyan-hermit-crab-ap-northeast-2";
 const s3 = new AWS.S3();
 // Configure AWS with your credentials
 AWS.config.update({
-    accessKeyId: 'ASIAUNA5PTH6NO3ZHFPQ',
-    secretAccessKey: 'GBB9/s2KKdnC5EC8wZyJw9X38Ye40JP5X4AWd7xB',
-    region: 'ap-northeast-2', // Replace with your AWS region
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.WS_SECRET_ACCESS_KEY,
+    region: process.env.AWS_REGION, 
   });
 
 const upload = multer({
