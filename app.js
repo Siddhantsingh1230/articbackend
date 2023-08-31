@@ -49,7 +49,7 @@ app.post("/upload", uploadImage.single("image"), (req, res) => {
   res.status(200).json({ success: true, message: "Uploaded Successfully" });
 });
 
-app.get("/read/file", (req, res) => {
+app.get("/read/:file", (req, res) => {
   const { file } = req.params;
   readFile(file);
 });
