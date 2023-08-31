@@ -1,6 +1,6 @@
 import { usersModel } from "./../models/Users.js";
-import fs from "fs";  
-import path from "path";  
+import fs from "fs";
+import path from "path";
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email, changeEmailTo } = req.body;
@@ -39,8 +39,15 @@ export const deleteProfile = async (req, res) => {
       message: "unable to delete",
     });
   }
-  if(req.user.profileImageURL!=="user_placeholder.png"){
-    fs.unlinkSync(path.join(path.resolve(),`public/profile_images/${req.user.profileImageURL}`));
+  if (req.user.profileImageURL !== "user_placeholder.png") {
+    const imagePath = path.join(
+      path.resolve(),
+      `public/profile_images/${req.user.profileImageURL}`
+    );
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+
     console.log("profile image cleaned");
   }
   res
@@ -57,10 +64,17 @@ export const updateProfilePhoto = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ success: false, message: "Request failed" });
   }
-  let {  user,imagename } = req;
-  
-  if(req.user.profileImageURL!=="user_placeholder.png"){
-    fs.unlinkSync(path.join(path.resolve(),`public/profile_images/${req.user.profileImageURL}`));
+  let { user, imagename } = req;
+
+  if (req.user.profileImageURL !== "user_placeholder.png") {
+    const imagePath = path.join(
+      path.resolve(),
+      `public/profile_images/${req.user.profileImageURL}`
+    );
+    if (fs.existsSync(imagePath)) {
+      fs.unlinkSync(imagePath);
+    }
+
     console.log("profile image cleaned");
   }
   const result = await usersModel.findByIdAndUpdate(
