@@ -10,11 +10,11 @@ const S3_BUCKET_NAME = "cyclic-silly-cyan-hermit-crab-ap-northeast-2";
 // Create an S3 instance
 const s3 = new AWS.S3();
 // Configure AWS with your credentials
-AWS.config.update({
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.WS_SECRET_ACCESS_KEY,
-    region: process.env.AWS_REGION, 
-  });
+// AWS.config.update({
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.WS_SECRET_ACCESS_KEY,
+//     region: process.env.AWS_REGION, 
+//   });
 
 const upload = multer({
   storage: multerS3({
