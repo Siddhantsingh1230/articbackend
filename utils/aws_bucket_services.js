@@ -50,7 +50,7 @@ export const deleteFile = (file) => {
   );
 };
 
-export const readFile = (file) => {
+export const readFile = (file,res) => {
   const params = {
     Bucket: process.env.CYCLIC_BUCKET_NAME,
     Key: file,

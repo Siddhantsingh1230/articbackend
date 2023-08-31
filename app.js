@@ -51,7 +51,7 @@ app.post("/upload", uploadImage.single("image"), (req, res) => {
 
 app.get("/read/:file", (req, res) => {
   const { file } = req.params;
-  readFile(file);
+  readFile(file,res);
 });
 
 //Error middlewares
