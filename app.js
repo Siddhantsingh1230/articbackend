@@ -45,10 +45,12 @@ app.get("/", (req, res) => {
   });
 });
 
-app.post("/upload", uploadImage.single("image"), (req, res) => {
+// img upload route to aws s3
+app.post("/imgupload", uploadImage.single("image"), (req, res) => {
   res.status(200).json({ success: true, message: "Uploaded Successfully" });
 });
 
+// File read route from aws s3
 app.get("/read/:file", (req, res) => {
   const { file } = req.params;
   readFile(file,res);

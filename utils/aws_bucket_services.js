@@ -4,16 +4,10 @@ import AWS from "aws-sdk";
 import path from "path";
 import  { S3Client } from '@aws-sdk/client-s3';
 
-//Multer s3 client
+// Multer s3 client
 const s3Client = new S3Client();
 // Create an S3 instance
 const s3 = new AWS.S3();
-// Configure AWS with your credentials
-// AWS.config.update({
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//     secretAccessKey: process.env.WS_SECRET_ACCESS_KEY,
-//     region: process.env.AWS_REGION, 
-//   });
 
 export const uploadImage = multer({
   storage: multerS3({
