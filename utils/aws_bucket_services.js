@@ -73,13 +73,13 @@ export const fileExist = (file) =>{
   s3.headObject(params, function(err, data) {
     if (err && err.code === 'NotFound') {
       // console.log('File not found');
-      return false;
+      res.status(200).json({sucess:true,foundObject:false});
     }
     else if (err) {
-      return false;
+      res.status(404).json({sucess:false,error:err});
     }
     else {
-      return true;
+      res.status(200).json({sucess:true,foundObject:true});
     }
   });
 }
