@@ -9,7 +9,7 @@ const s3Client = new S3Client();
 // Create an S3 instance
 const s3 = new AWS.S3();
 
-export const uploadImage = multer({
+export const uploadImageToProfileImages = multer({
   storage: multerS3({
     s3: s3Client,
     bucket: process.env.CYCLIC_BUCKET_NAME,
@@ -17,15 +17,11 @@ export const uploadImage = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      const fileName =
-        file.fieldname +
-        "-" +
-        Date.now().toString() +
-        path.extname(file.originalname);
+      const fileName = "profile_images/user_placeholder.png";
 
       cb(null, fileName);
       console.log(fileName);
-      req.fileName = fileName;
+      req.imagename = fileName;
     },
   }),
 });
@@ -40,9 +36,7 @@ export const deleteFile = (file, res) => {
           .status(500)
           .json({ success: false, message: "Internal Server Error" });
       } else {
-        res
-          .status(200)
-          .json({ success: true, message: "File deleted successfully" });
+        console.log("File deleted successfully");
       }
     }
   );
@@ -66,20 +60,19 @@ export const readFile = (file, res) => {
   });
 };
 
-export const fileExist = (file,res) =>{
+export const fileExist = (file, res) => {
   const params = {
-     Bucket: process.env.CYCLIC_BUCKET_NAME, Key: file 
-  }
-  s3.headObject(params, function(err, data) {
-    if (err && err.code === 'NotFound') {
+    Bucket: process.env.CYCLIC_BUCKET_NAME,
+    Key: file,
+  };
+  s3.headObject(params, function (err, data) {
+    if (err && err.code === "NotFound") {
       // console.log('File not found');
-      res.status(200).json({sucess:true,foundObject:false});
-    }
-    else if (err) {
-      res.status(404).json({sucess:false,error:err});
-    }
-    else {
-      res.status(200).json({sucess:true,foundObject:true});
+      res.status(200).json({ sucess: true, foundObject: false });
+    } else if (err) {
+      res.status(404).json({ sucess: false, error: err });
+    } else {
+      res.status(200).json({ sucess: true, foundObject: true });
     }
   });
-}
+};

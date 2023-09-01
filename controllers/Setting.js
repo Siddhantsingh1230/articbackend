@@ -1,6 +1,7 @@
 import { usersModel } from "./../models/Users.js";
 import fs from "fs";
 import path from "path";
+import { deleteFile } from "../utils/aws_bucket_services.js";
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email, changeEmailTo } = req.body;
@@ -32,6 +33,10 @@ export const updateProfile = async (req, res) => {
 };
 
 export const deleteProfile = async (req, res) => {
+  if (req.user.profileImageURL !== "profile_images/user_placeholder.png") {
+    deleteFile(req.user.profileImageURL);
+  }
+  
   const result = await usersModel.findByIdAndDelete({ _id: req.user._id });
   if (!result) {
     return res.status(404).json({
@@ -39,17 +44,7 @@ export const deleteProfile = async (req, res) => {
       message: "unable to delete",
     });
   }
-  if (req.user.profileImageURL !== "user_placeholder.png") {
-    const imagePath = path.join(
-      path.resolve(),
-      `public/profile_images/${req.user.profileImageURL}`
-    );
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
-    }
-
-    console.log("profile image cleaned");
-  }
+  
   res
     .status(200)
     .cookie("token", "", {
@@ -66,16 +61,8 @@ export const updateProfilePhoto = async (req, res) => {
   }
   let { user, imagename } = req;
 
-  if (req.user.profileImageURL !== "user_placeholder.png") {
-    const imagePath = path.join(
-      path.resolve(),
-      `public/profile_images/${req.user.profileImageURL}`
-    );
-    if (fs.existsSync(imagePath)) {
-      fs.unlinkSync(imagePath);
-    }
-
-    console.log("profile image cleaned");
+  if (req.user.profileImageURL !== "profile_images/user_placeholder.png") {
+    deleteFile(req.user.profileImageURL);
   }
   const result = await usersModel.findByIdAndUpdate(
     { _id: user._id },

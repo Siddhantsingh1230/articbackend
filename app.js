@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
 });
 
 // img upload route to aws s3
-app.post("/imgupload", uploadImage.single("image"), (req, res) => {
+app.post("/imgupload", uploadImageToProfileImages.single("image"), (req, res) => {
   res.status(200).json({ success: true, message: "Uploaded Successfully" });
 });
 
