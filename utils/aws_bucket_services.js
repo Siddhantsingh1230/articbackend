@@ -66,7 +66,7 @@ export const readFile = (file, res) => {
   });
 };
 
-export const fileExist = (file) =>{
+export const fileExist = (file,res) =>{
   const params = {
      Bucket: process.env.CYCLIC_BUCKET_NAME, Key: file 
   }

@@ -58,7 +58,7 @@ app.get("/read/:file", (req, res) => {
 
 app.get("/fileexist/:file",(req,res)=>{
   const { file } = req.params;
-  fileExist(file);
+  fileExist(file,res);
   
 });
 
