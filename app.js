@@ -45,11 +45,6 @@ app.get("/", (req, res) => {
   });
 });
 
-// img upload route to aws s3
-app.post("/imgupload", uploadImageToProfileImages.single("image"), (req, res) => {
-  res.status(200).json({ success: true, message: "Uploaded Successfully" });
-});
-
 // File read route from aws s3
 app.get("/read/:dir/:file", (req, res) => {
   const dir  = req.params['dir'];
@@ -57,11 +52,7 @@ app.get("/read/:dir/:file", (req, res) => {
   readFile(`${dir}/${file}`,res);
 });
 
-app.get("/fileexist/:file",(req,res)=>{
-  const { file } = req.params;
-  fileExist(file,res);
-  
-});
+
 
 //Error middlewares
 app.use(errorMiddleware);
