@@ -25,7 +25,7 @@ const usersSchema = new mongoose.Schema({
   },
   profileImageURL:{
     type:String,
-    default:"user_placeholder.png",
+    default:"profile_images/user_placeholder.png",
   }
 });
 
