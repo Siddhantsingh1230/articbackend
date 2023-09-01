@@ -6,7 +6,7 @@ import cors from "cors";
 import { errorMiddleware } from "./middlewares/error.js";
 import usersRouter from "./routes/Users.js";
 import settingRouter from "./routes/Setting.js";
-import { fileExist, readFile, uploadImage } from "./utils/aws_bucket_services.js";
+import { fileExist, readFile, uploadImageToProfileImages } from "./utils/aws_bucket_services.js";
 
 // App
 export const app = express();
