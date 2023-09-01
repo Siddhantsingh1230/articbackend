@@ -16,7 +16,7 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password ,remember } = req.body;
   let user = await usersModel.findOne({ email }).select("+password");
   if (!user) {
     return res.status(404).json({
@@ -32,7 +32,7 @@ export const login = async (req, res) => {
       message: "incorrect email or password",
     });
   }
-  sendCookie(user, res, `Welcome back, ${user.firstname}`);
+  sendCookie(remember,user, res, `Welcome back, ${user.firstname}`);
 };
 
 export const signup = async (req, res) => {

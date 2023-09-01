@@ -5,13 +5,23 @@ import path from "path";
 import multer from "multer";
 
 //Send Cookies
-export const sendCookie = (user, res, message, status = 200) => {
+export const sendCookie = (
+  remember = false,
+  user,
+  res,
+  message,
+  status = 200
+) => {
   const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY);
+  const timeout = 15;
+  if(remember){
+    timeout = 60
+  }
   res
     .status(status)
     .cookie("token", token, {
       httpOnly: true,
-      maxAge: 15 * 60 * 1000,
+      maxAge: timeout * 60 * 1000,
       sameSite: "none",
       secure: true,
     })
@@ -72,15 +82,3 @@ export const sendRegMail = (name, date, from, pass, recipient, sub) => {
     });
   });
 };
-
-///////////////////////////Uploads images to a dir///////////////////////////////////
-// Define the storage for uploaded files using Multer
-const storage = multer.diskStorage({
-  destination: 'public/profile_images/',
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    req.imagename =file.fieldname + '-' + Date.now() + path.extname(file.originalname);
-  },
-});
-// Create an instance of Multer with the storage configuration
-export const upload = multer({ storage: storage });
