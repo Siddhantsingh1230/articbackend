@@ -51,9 +51,10 @@ app.post("/imgupload", uploadImageToProfileImages.single("image"), (req, res) =>
 });
 
 // File read route from aws s3
-app.get("/read/:file", (req, res) => {
-  const { file } = req.params;
-  readFile(file,res);
+app.get("/read/:dir/:file", (req, res) => {
+  const dir  = req.params['dir'];
+  const file  = req.params['file'];
+  readFile(`${dir}/${file}`,res);
 });
 
 app.get("/fileexist/:file",(req,res)=>{
