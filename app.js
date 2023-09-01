@@ -6,7 +6,7 @@ import cors from "cors";
 import { errorMiddleware } from "./middlewares/error.js";
 import usersRouter from "./routes/Users.js";
 import settingRouter from "./routes/Setting.js";
-import { readFile, uploadImage } from "./utils/aws_bucket_services.js";
+import { fileExist, readFile, uploadImage } from "./utils/aws_bucket_services.js";
 
 // App
 export const app = express();
@@ -54,6 +54,11 @@ app.post("/imgupload", uploadImage.single("image"), (req, res) => {
 app.get("/read/:file", (req, res) => {
   const { file } = req.params;
   readFile(file,res);
+});
+
+app.get("/fileexist/:file",(req,res)=>{
+  const { file } = req.params;
+  res.send(fileExist(file));
 });
 
 //Error middlewares

@@ -2,7 +2,7 @@ import multer from "multer";
 import multerS3 from "multer-s3";
 import AWS from "aws-sdk";
 import path from "path";
-import  { S3Client } from '@aws-sdk/client-s3';
+import { S3Client } from "@aws-sdk/client-s3";
 
 // Multer s3 client
 const s3Client = new S3Client();
@@ -17,37 +17,38 @@ export const uploadImage = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      cb(
-        null,
+      const fileName =
         file.fieldname +
-          "-" +
-          Date.now().toString() +
-          path.extname(file.originalname)
-      );
-      console.log(
-        file.fieldname +
-          "-" +
-          Date.now().toString() +
-          path.extname(file.originalname)
-      );
+        "-" +
+        Date.now().toString() +
+        path.extname(file.originalname);
+
+      cb(null, fileName);
+      console.log(fileName);
+      req.fileName = fileName;
     },
   }),
 });
 
-export const deleteFile = (file) => {
+export const deleteFile = (file, res) => {
   s3.deleteObject(
     { Bucket: process.env.CYCLIC_BUCKET_NAME, Key: file },
     (err, data) => {
       if (err) {
         console.error("Error deleting file:", err);
+        return res
+          .status(500)
+          .json({ success: false, message: "Internal Server Error" });
       } else {
-        console.log("File deleted successfully");
+        res
+          .status(200)
+          .json({ success: true, message: "File deleted successfully" });
       }
     }
   );
 };
 
-export const readFile = (file,res) => {
+export const readFile = (file, res) => {
   const params = {
     Bucket: process.env.CYCLIC_BUCKET_NAME,
     Key: file,
@@ -57,8 +58,28 @@ export const readFile = (file,res) => {
   s3.getSignedUrl("getObject", params, (err, url) => {
     if (err) {
       console.error("Error generating file URL:", err);
-      return res.status(500).json({success:false,message:"Internal Server Error"});
+      return res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
     res.status(200).json({ success: true, fileUrl: url });
   });
 };
+
+export const fileExist = (file) =>{
+  const params = {
+     Bucket: process.env.CYCLIC_BUCKET_NAME, Key: file 
+  }
+  s3.headObject(params, function(err, data) {
+    if (err && err.code === 'NotFound') {
+      // console.log('File not found');
+      return false;
+    }
+    else if (err) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  });
+}
