@@ -17,7 +17,11 @@ export const uploadImageToProfileImages = multer({
       cb(null, { fieldName: file.fieldname });
     },
     key: function (req, file, cb) {
-      const fileName = "profile_images/user_placeholder.png";
+      const fileName = "profile_images/";
+      file.fieldname +
+        "-" +
+        Date.now().toString() +
+        path.extname(file.originalname);
 
       cb(null, fileName);
       console.log(fileName);
