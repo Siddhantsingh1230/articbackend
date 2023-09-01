@@ -58,7 +58,8 @@ app.get("/read/:file", (req, res) => {
 
 app.get("/fileexist/:file",(req,res)=>{
   const { file } = req.params;
-  res.status(200).json({sucess:true,foundObject:fileExist(file)});
+  const  status = fileExist(file);
+  res.status(200).json({sucess:true,foundObject:status});
 });
 
 //Error middlewares
