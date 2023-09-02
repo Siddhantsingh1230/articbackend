@@ -1,5 +1,5 @@
 import { connectDB } from "./data/database.js";
-import { app } from "../app.js";
+import { app } from "./app.js";
 // Database connection and  APP Listens
 
 connectDB();
