@@ -35,7 +35,7 @@ export const deleteProfile = async (req, res) => {
   if (req.user.profileImageURL !== "profile_images/user_placeholder.png") {
     deleteFile(req.user.profileImageURL);
   }
-  bucket = await bucketModel.deleteOne({
+  await bucketModel.deleteOne({
     key:req.user.profileImageURL
   });
   const result = await usersModel.findByIdAndDelete({ _id: req.user._id });
@@ -66,7 +66,7 @@ export const updateProfilePhoto = async (req, res) => {
     deleteFile(req.user.profileImageURL);
   }
 
-  bucket = await bucketModel.create({
+   await bucketModel.create({
     key:imagename,
   });
 

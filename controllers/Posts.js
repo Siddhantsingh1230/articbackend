@@ -14,7 +14,7 @@ export const uploadPost = async (req, res) => {
     postCaption,
     postURL,
   });
-  bucket = await bucketModel.create({
+   await bucketModel.create({
     key:req.postname,
   });
   
