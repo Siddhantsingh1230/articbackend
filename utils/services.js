@@ -9,7 +9,7 @@ export const sendCookie = (
   user,
   res,
   message,
-  status = 200
+  statusCode = 200
 ) => {
   const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY);
   let timeout = 15;
@@ -17,7 +17,7 @@ export const sendCookie = (
     timeout = 60 ;
   }
   res
-    .status(status)
+    .status(statusCode)
     .cookie("token", token, {
       httpOnly: true,
       maxAge: timeout * 60 * 1000,
