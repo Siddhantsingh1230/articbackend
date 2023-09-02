@@ -4,16 +4,17 @@ export const uploadPost = async (req, res) => {
   if (!req.file) {
     return res.status(404).json({ success: false, message: "Request failed" });
   }
-  const { postCaption, userID } = req.body;
+  const { postCaption } = req.body;
+  const { user } = req.user;
   const postURL = req.postname;
 
   post = await postsModel.create({
-    userID,postCaption,postURL
+    userID:user._id,
+    postCaption,
+    postURL,
   });
-  console.log("post created:",post);
-  res.status(201).json({success:true,message:"Post created!"});
-
-
+  console.log("post created:", post);
+  res.status(201).json({ success: true, message: "Post created!" });
 };
 
 export const deletePost = async () => {};
