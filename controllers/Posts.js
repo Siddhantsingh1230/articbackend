@@ -29,8 +29,11 @@ export const deletePost = async (req, res) => {
   await postsModel.findByIdAndDelete(
     { _id },
   );
-  const bucket = await bucketModel.findOne({key:postURL});
-  await bucketModel.findByIdandDelete({_id:bucket._id});
+  const bucket = await bucketModel.deleteOne({key:postURL});
+  if(!bucket){
+    console.log("bucket key not cleaned");
+  }
+  console.log("bucket key cleaned");
   res.status(200).json({success:true,message:"Post deleted"});
 };
 
