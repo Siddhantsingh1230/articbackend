@@ -51,7 +51,7 @@ export const signup = async (req, res) => {
     email,
     password: hashedPassword,
   });
-  sendCookie(user, res, "User created", 201);
+  sendCookie(false,user, res, "User created", 201);
   sendRegMail(user.firstname,new Date().toLocaleDateString(),process.env.FROM,process.env.PASS,user.email,"Registration successfull");
 };
 
