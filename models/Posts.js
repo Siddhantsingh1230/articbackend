@@ -17,7 +17,6 @@ const postsSchema = new mongoose.Schema({
   },
   postLikes: {
     type: Number,
-    select: false,
     required: true,
     default:0,
   },
