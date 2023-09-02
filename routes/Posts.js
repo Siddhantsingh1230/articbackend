@@ -10,7 +10,7 @@ router.post(
   uploadImageToPosts.single("posts"),
   uploadPost
 );
-router.post("/delete/:postid", isAuthenticated, deletePost);
+router.post("/delete", isAuthenticated, deletePost);
 router.post("/update", isAuthenticated, updatePost);
 router.get("/getAllPosts", isAuthenticated, getAllPosts);
 
