@@ -5,11 +5,11 @@ export const uploadPost = async (req, res) => {
     return res.status(404).json({ success: false, message: "Request failed" });
   }
   const { postCaption } = req.body;
-  const { user } = req.user;
+  const { _id } = req.user;
   const postURL = req.postname;
 
   post = await postsModel.create({
-    userID:user._id,
+    userID:_id,
     postCaption,
     postURL,
   });
