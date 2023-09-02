@@ -1,5 +1,6 @@
 import { usersModel } from "./../models/Users.js";
 import { deleteFile } from "../utils/aws_bucket_services.js";
+import { bucketModel } from "../models/BucketKeys";
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email, changeEmailTo } = req.body;
@@ -34,7 +35,9 @@ export const deleteProfile = async (req, res) => {
   if (req.user.profileImageURL !== "profile_images/user_placeholder.png") {
     deleteFile(req.user.profileImageURL);
   }
-  
+  bucket = await bucketModel.deleteOne({
+    key:req.user.profileImageURL
+  });
   const result = await usersModel.findByIdAndDelete({ _id: req.user._id });
   if (!result) {
     return res.status(404).json({
@@ -62,6 +65,11 @@ export const updateProfilePhoto = async (req, res) => {
   if (req.user.profileImageURL !== "profile_images/user_placeholder.png") {
     deleteFile(req.user.profileImageURL);
   }
+
+  bucket = await bucketModel.create({
+    key:imagename,
+  });
+
   const result = await usersModel.findByIdAndUpdate(
     { _id: user._id },
     {

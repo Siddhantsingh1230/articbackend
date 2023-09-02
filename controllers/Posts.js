@@ -1,4 +1,5 @@
 import { postsModel } from "../models/Posts.js";
+import { bucketModel } from "../models/BucketKeys";
 
 export const uploadPost = async (req, res) => {
   if (!req.file) {
@@ -13,6 +14,10 @@ export const uploadPost = async (req, res) => {
     postCaption,
     postURL,
   });
+  bucket = await bucketModel.create({
+    key:req.postname,
+  });
+  
   console.log("post created:", post);
   res.status(201).json({ success: true, message: "Post created!" });
 };

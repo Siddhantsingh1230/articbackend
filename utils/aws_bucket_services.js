@@ -4,6 +4,7 @@ import AWS from "aws-sdk";
 import path from "path";
 import { S3Client } from "@aws-sdk/client-s3";
 
+
 // Multer s3 client
 const s3Client = new S3Client();
 // Create an S3 instance
