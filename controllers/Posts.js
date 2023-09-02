@@ -1,5 +1,5 @@
 import { postsModel } from "../models/Posts.js";
-import { bucketModel } from "../models/BucketKeys";
+import { bucketModel } from "../models/BucketKeys.js";
 
 export const uploadPost = async (req, res) => {
   if (!req.file) {

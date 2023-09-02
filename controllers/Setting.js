@@ -1,6 +1,6 @@
 import { usersModel } from "./../models/Users.js";
 import { deleteFile } from "../utils/aws_bucket_services.js";
-import { bucketModel } from "../models/BucketKeys";
+import { bucketModel } from "../models/BucketKeys.js";
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email, changeEmailTo } = req.body;
