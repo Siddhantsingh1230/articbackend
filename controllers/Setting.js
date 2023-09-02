@@ -38,6 +38,7 @@ export const deleteProfile = async (req, res) => {
   await bucketModel.deleteOne({
     key:req.user.profileImageURL
   });
+  
   const result = await usersModel.findByIdAndDelete({ _id: req.user._id });
   if (!result) {
     return res.status(404).json({

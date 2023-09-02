@@ -101,7 +101,7 @@ export const uploadImageToPosts = multer({
         path.extname(file.originalname);
 
       cb(null, fileName);
-      console.log("post added" + fileName);
+      console.log("post added - " + fileName);
       req.postname = fileName;
     },
   }),

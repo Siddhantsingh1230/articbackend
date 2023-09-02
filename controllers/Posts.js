@@ -9,7 +9,7 @@ export const uploadPost = async (req, res) => {
   const { _id } = req.user;
   const postURL = req.postname;
 
-  post = await postsModel.create({
+  await postsModel.create({
     userID:_id,
     postCaption,
     postURL,
@@ -18,7 +18,7 @@ export const uploadPost = async (req, res) => {
     key:req.postname,
   });
   
-  console.log("post created:", post);
+  console.log("post created: ", post);
   res.status(201).json({ success: true, message: "Post created!" });
 };
 
