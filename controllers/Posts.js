@@ -28,7 +28,7 @@ export const updatePost = async () => {};
 
 export const getAllPosts = async (req, res) => {
   const { _id } = req.user;
-  const posts = postsModel.find({
+  const posts = await postsModel.find({
     userID: _id,
   });
   if (!posts) {
