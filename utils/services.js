@@ -15,7 +15,7 @@ export const sendCookie = (
   const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY);
   let timeout = 15;
   if(remember){
-    timeout = 60
+    timeout = 60 ;
   }
   res
     .status(status)

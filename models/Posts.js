@@ -9,6 +9,7 @@ const postsSchema = new mongoose.Schema({
   postType: {
     type: String,
     required: true,
+    default:"image",
   },
   postCaption: {
     type: String,
@@ -18,6 +19,7 @@ const postsSchema = new mongoose.Schema({
     type: Number,
     select: false,
     required: true,
+    default:0,
   },
   createdAt: {
     type: Date,
@@ -25,6 +27,7 @@ const postsSchema = new mongoose.Schema({
   },
   postURL: {
     type: String,
+    required:true,
   },
 });
 
