@@ -11,7 +11,7 @@ router.post(
   uploadPost
 );
 router.post("/delete/:postid", isAuthenticated, deletePost);
-router.post("/update/:postid", isAuthenticated, updatePost);
+router.post("/update", isAuthenticated, updatePost);
 router.get("/getAllPosts", isAuthenticated, getAllPosts);
 
 export default router;

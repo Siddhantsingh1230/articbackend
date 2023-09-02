@@ -24,7 +24,24 @@ export const uploadPost = async (req, res) => {
 
 export const deletePost = async () => {};
 
-export const updatePost = async () => {};
+export const updatePost = async (req,res) => {
+  const {_id,postCaption} = req.body;
+  const result = await postsModel.findByIdAndUpdate(
+    { _id },
+    {
+      $set: {
+        postCaption
+      },
+    }
+  );
+  if (!result) {
+    return res.status(404).json({
+      success: false,
+      message: "Unable to update",
+    });
+  }
+  res.status(200).json({ success: true, message: "Post updated " });
+};
 
 export const getAllPosts = async (req, res) => {
   const { _id } = req.user;
