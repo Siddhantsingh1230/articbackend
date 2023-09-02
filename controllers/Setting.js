@@ -1,6 +1,4 @@
 import { usersModel } from "./../models/Users.js";
-import fs from "fs";
-import path from "path";
 import { deleteFile } from "../utils/aws_bucket_services.js";
 
 export const updateProfile = async (req, res) => {

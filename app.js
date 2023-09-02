@@ -6,7 +6,8 @@ import cors from "cors";
 import { errorMiddleware } from "./middlewares/error.js";
 import usersRouter from "./routes/Users.js";
 import settingRouter from "./routes/Setting.js";
-import { fileExist, readFile, uploadImageToProfileImages } from "./utils/aws_bucket_services.js";
+import postsRouter from "./routes/Posts.js";
+import { readFile } from "./utils/aws_bucket_services.js";
 
 // App
 export const app = express();
@@ -31,6 +32,7 @@ app.use(
 // Routes
 app.use("/users", usersRouter);
 app.use("/setting", settingRouter);
+app.use("/posts", postsRouter);
 
 //environment variables
 configDotenv({
@@ -47,12 +49,10 @@ app.get("/", (req, res) => {
 
 // File read route from aws s3
 app.get("/read/:dir/:file", (req, res) => {
-  const dir  = req.params['dir'];
-  const file  = req.params['file'];
-  readFile(`${dir}/${file}`,res);
+  const dir = req.params["dir"];
+  const file = req.params["file"];
+  readFile(`${dir}/${file}`, res);
 });
-
-
 
 //Error middlewares
 app.use(errorMiddleware);

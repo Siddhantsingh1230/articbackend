@@ -9,6 +9,7 @@ const s3Client = new S3Client();
 // Create an S3 instance
 const s3 = new AWS.S3();
 
+// For Profile Settings
 export const uploadImageToProfileImages = multer({
   storage: multerS3({
     s3: s3Client,
@@ -81,3 +82,26 @@ export const fileExist = (file, res) => {
     }
   });
 };
+
+// For Posts
+export const uploadImageToPosts = multer({
+  storage: multerS3({
+    s3: s3Client,
+    bucket: process.env.CYCLIC_BUCKET_NAME,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      const fileName =
+        "posts/" +
+        file.fieldname +
+        "-" +
+        Date.now().toString() +
+        path.extname(file.originalname);
+
+      cb(null, fileName);
+      console.log("post added" + fileName);
+      req.postname = fileName;
+    },
+  }),
+});
