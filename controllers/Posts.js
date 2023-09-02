@@ -9,7 +9,7 @@ export const uploadPost = async (req, res) => {
   const { _id } = req.user;
   const postURL = req.postname;
 
-  await postsModel.create({
+  const post = await postsModel.create({
     userID:_id,
     postCaption,
     postURL,
