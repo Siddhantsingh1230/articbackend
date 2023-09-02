@@ -2,7 +2,6 @@ import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import ejs from "ejs";
 import path from "path";
-import multer from "multer";
 
 //Send Cookies
 export const sendCookie = (
