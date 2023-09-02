@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { app } from "../app.js";
 
-export const connectDB = () => {
+export const connectDBAndListen = () => {
   mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => {
