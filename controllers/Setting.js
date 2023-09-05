@@ -2,6 +2,7 @@ import { usersModel } from "./../models/Users.js";
 import { deleteFile } from "../utils/aws_bucket_services.js";
 import { bucketModel } from "../models/BucketKeys.js";
 import { postsModel } from "../models/Posts.js";
+import { likesModel } from "../models/Likes.js";
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email } = req.body;
@@ -51,6 +52,13 @@ export const deleteProfile = async (req, res) => {
   posts.forEach((post) => {
     deleteFile(post.postURL,res);
   });
+  
+  //remove all related Likes
+  const response = await likesModel.deleteMany({userID:req.user._id});
+  if(!response){
+      return res.status(404).json({success:false,message:"Error while deleting likes of this user"});
+  }
+
   // Remove all related posts
   await postsModel.deleteMany({ userID: req.user._id });
   res
