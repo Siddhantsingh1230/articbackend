@@ -34,7 +34,7 @@ export const unliked = async (req,res) =>{
     if(!unliked){
         return res.status(404).json({success:false,message:"Error while unliking"});
     }
-    const post = await postsModel.findByIdAndUpdate({_id:postId},{ $inc: { postLikes: -1 }});
+    const post = await postsModel.findByIdAndUpdate({_id:postID},{ $inc: { postLikes: -1 }});
     if(!post){
         return res.status(404).json({success:false,message:"Like DEC Error"});
     }
