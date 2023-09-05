@@ -6,9 +6,17 @@ const commentsSchema = new mongoose.Schema({
     ref: "users",
     required: true,
   },
+  userName:{
+    type:String,
+    required: true,
+  },
   postID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "posts",
+    required: true,
+  },
+  comment:{
+    type:String,
     required: true,
   },
   createdAt: {
