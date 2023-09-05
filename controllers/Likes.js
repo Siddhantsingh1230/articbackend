@@ -2,12 +2,11 @@ import { likesModel } from "../models/Likes.js";
 import { postsModel } from "../models/Posts.js";
 
 export const isLiked = async (req, res) => {
-  //   const { _id } = req.user;
   try {
     const { postID, userID } = req.body;
-    const like = await likesModel.find({ userID, postID });
+    const like = await likesModel.findOne({ userID, postID });
     if (!like) {
-      return res.status(400).json({ success: true, message: false });
+      return res.status(404).json({ success: true, message: false });
     }
     res.status(200).json({ success: true, message: true });
   } catch (error) {
