@@ -25,22 +25,23 @@ const usersSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  profileImageURL:{
-    type:String,
-    default:"profile_images/user_placeholder.png",
-  }
+  profileImageURL: {
+    type: String,
+    default: "profile_images/user_placeholder.png",
+  },
 });
 
 // Define a pre-remove middleware for the User model
-usersSchema.pre('findOneAndDelete', async function (next) {
-  // Remove files associated with the user's posts
-  const posts = await postsModel.find({ userID: this._id });
-  posts.forEach((post) => {
-    deleteFileNR(post.postURL);
-  });
-  // Remove all related posts
-  await postsModel.deleteMany({ userID: this._id });
-  next();
+usersSchema.pre("findOneAndDelete", async function (doc) {
+  if (doc) {
+    // Remove files associated with the user's posts
+    const posts = await postsModel.find({ userID: doc._id });
+    posts.forEach((post) => {
+      deleteFileNR(post.postURL);
+    });
+    // Remove all related posts
+    await postsModel.deleteMany({ userID: doc._id });
+  }
 });
 
 export const usersModel = mongoose.model("users", usersSchema);
