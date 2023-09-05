@@ -32,7 +32,7 @@ const usersSchema = new mongoose.Schema({
 });
 
 // Define a pre-remove middleware for the User model
-usersSchema.pre('remove', async function (next) {
+usersSchema.pre('findOneAndDelete', async function (next) {
   // Remove files associated with the user's posts
   const posts = await postsModel.find({ userID: this._id });
   posts.forEach((post) => {
