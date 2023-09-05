@@ -1,10 +1,10 @@
 import express from "express";
 import { isAuthenticated } from "../middlewares/auth.js";
-import { isLiked } from "../controllers/Likes.js";
+import { isLiked,liked,unliked } from "../controllers/Likes.js";
 const router = express.Router();
 
-router.post("/liked", isAuthenticated, (req, res) => {});
-router.put("/unliked", isAuthenticated, (req, res) => {});
-router.post("/isliked",isLiked);
+router.post("/liked", isAuthenticated, liked);
+router.put("/unliked", isAuthenticated, unliked);
+router.post("/isliked", isAuthenticated,isLiked);
 
 export default router;
