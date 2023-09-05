@@ -3,6 +3,7 @@ import { deleteFile } from "../utils/aws_bucket_services.js";
 import { bucketModel } from "../models/BucketKeys.js";
 import { postsModel } from "../models/Posts.js";
 import { likesModel } from "../models/Likes.js";
+import { commentsModel } from "../models/Comments.js";
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email } = req.body;
@@ -50,13 +51,28 @@ export const deleteProfile = async (req, res) => {
   // Remove files associated with the user's posts
   const posts = await postsModel.find({ userID: req.user._id });
   posts.forEach((post) => {
-    deleteFile(post.postURL,res);
+    deleteFile(post.postURL, res);
   });
-  
+  // Remove all related Comments
+  const comresponse = await commentsModel.deleteMany({ userID: req.user._id });
+  if (!comresponse) {
+    return res
+      .status(404)
+      .json({
+        success: false,
+        message: "Error while deleting comments of this user",
+      });
+  }
+
   //remove all related Likes
-  const response = await likesModel.deleteMany({userID:req.user._id});
-  if(!response){
-      return res.status(404).json({success:false,message:"Error while deleting likes of this user"});
+  const response = await likesModel.deleteMany({ userID: req.user._id });
+  if (!response) {
+    return res
+      .status(404)
+      .json({
+        success: false,
+        message: "Error while deleting likes of this user",
+      });
   }
 
   // Remove all related posts
