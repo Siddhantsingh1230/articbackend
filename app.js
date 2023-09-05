@@ -7,6 +7,7 @@ import { errorMiddleware } from "./middlewares/error.js";
 import usersRouter from "./routes/Users.js";
 import settingRouter from "./routes/Setting.js";
 import postsRouter from "./routes/Posts.js";
+import likesRouter from "./routes/Likes.js";
 import { deleteFile, readFile } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 
@@ -34,6 +35,7 @@ app.use(
 app.use("/users", usersRouter);
 app.use("/setting", settingRouter);
 app.use("/posts", postsRouter);
+app.use("/likes", likesRouter);
 
 //environment variables
 configDotenv({
