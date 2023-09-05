@@ -6,7 +6,7 @@ export const getAllComments = async (req, res) => {
     const { postID } = req.body;
     const comments = await commentsModel.find({ postID });
     if (comments.length === 0) {
-      return res.status(200).json({ success: true, message: "No comments" });
+      return res.status(404).json({ success: true, message: "No comments" });
     }
     let profileURLArray = [];
     for (const comment of comments) {
