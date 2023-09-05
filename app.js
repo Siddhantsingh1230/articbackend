@@ -7,7 +7,8 @@ import { errorMiddleware } from "./middlewares/error.js";
 import usersRouter from "./routes/Users.js";
 import settingRouter from "./routes/Setting.js";
 import postsRouter from "./routes/Posts.js";
-import { readFile } from "./utils/aws_bucket_services.js";
+import { deleteFile, readFile } from "./utils/aws_bucket_services.js";
+import { bucketModel } from "./models/BucketKeys.js";
 
 // App
 export const app = express();
@@ -52,6 +53,21 @@ app.get("/read/:dir/:file", (req, res) => {
   const dir = req.params["dir"];
   const file = req.params["file"];
   readFile(`${dir}/${file}`, res);
+});
+
+// Only for Dev purposes
+app.get("/deleteBucket", async (req, res) => {
+  const bucket = await bucketModel.find({});
+  bucket.forEach((item) => {
+    deleteFile(item.key, res);
+  });
+  const res = await bucketModel.deleteMany({});
+  if (!res) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to delete from bucket" });
+  }
+  res.status(200).json({ success: true, message: "Deleted Bucket" });
 });
 
 //Error middlewares
