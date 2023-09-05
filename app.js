@@ -61,8 +61,8 @@ app.get("/deleteBucket", async (req, res) => {
   bucket.forEach((item) => {
     deleteFile(item.key, res);
   });
-  const res = await bucketModel.deleteMany({});
-  if (!res) {
+  const resp = await bucketModel.deleteMany({});
+  if (!resp) {
     return res
       .status(500)
       .json({ success: false, message: "Failed to delete from bucket" });
