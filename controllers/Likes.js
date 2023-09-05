@@ -7,5 +7,6 @@ export const isLiked = async (req, res) => {
   if(!like){
     return res.status(200).json({ success: true, message: false });
   }
+  
   res.status(200).json({ success: true, message: true });
 };
