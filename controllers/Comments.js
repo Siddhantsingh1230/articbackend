@@ -20,5 +20,5 @@ export const createComment = async (req, res) => {
   if (!commentres) {
     return res.status(404).json({ success: false, message: "Comment failed" });
   }
-  res.status(200).json({ success: truee, message: "Comment done" });
+  res.status(200).json({ success: true, message: "Comment done" });
 };
