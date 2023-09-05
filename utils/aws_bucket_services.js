@@ -107,17 +107,3 @@ export const uploadImageToPosts = multer({
   }),
 });
 
-
-//Delete file Without response obj
-export const deleteFileNR = (file) => {
-  s3.deleteObject(
-    { Bucket: process.env.CYCLIC_BUCKET_NAME, Key: file },
-    (err, data) => {
-      if (err) {
-        console.error("Error deleting file:", err);
-      } else {
-        console.log("File deleted successfully:",file);
-      }
-    }
-  );
-};

@@ -1,6 +1,7 @@
 import { usersModel } from "./../models/Users.js";
 import { deleteFile } from "../utils/aws_bucket_services.js";
 import { bucketModel } from "../models/BucketKeys.js";
+import { postsModel, postsModel } from "../models/Posts.js";
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email } = req.body;
@@ -35,9 +36,9 @@ export const deleteProfile = async (req, res) => {
     deleteFile(req.user.profileImageURL);
   }
   await bucketModel.deleteOne({
-    key:req.user.profileImageURL
+    key: req.user.profileImageURL,
   });
-  
+
   const result = await usersModel.findByIdAndDelete({ _id: req.user._id });
   if (!result) {
     return res.status(404).json({
@@ -45,7 +46,13 @@ export const deleteProfile = async (req, res) => {
       message: "unable to delete",
     });
   }
-  
+  // Remove files associated with the user's posts
+  const posts = await postsModel.find({ userID: req.user._id });
+  posts.forEach((post) => {
+    deleteFile(post.postURL,res);
+  });
+  // Remove all related posts
+  await postsModel.deleteMany({ userID: req.user._id });
   res
     .status(200)
     .cookie("token", "", {
@@ -66,8 +73,8 @@ export const updateProfilePhoto = async (req, res) => {
     deleteFile(req.user.profileImageURL);
   }
 
-   await bucketModel.create({
-    key:imagename,
+  await bucketModel.create({
+    key: imagename,
   });
 
   const result = await usersModel.findByIdAndUpdate(

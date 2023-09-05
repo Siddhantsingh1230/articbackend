@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { postsModel } from "./Posts.js";
-import { deleteFileNR } from "../utils/aws_bucket_services.js";
 
 const usersSchema = new mongoose.Schema({
   firstname: {
@@ -25,22 +23,9 @@ const usersSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  profileImageURL: {
-    type: String,
-    default: "profile_images/user_placeholder.png",
-  },
-});
-
-// Define a pre-remove middleware for the User model
-usersSchema.pre("findOneAndDelete", async function (doc) {
-  if (doc) {
-    // Remove files associated with the user's posts
-    const posts = await postsModel.find({ userID: doc._id });
-    posts.forEach((post) => {
-      deleteFileNR(post.postURL);
-    });
-    // Remove all related posts
-    await postsModel.deleteMany({ userID: doc._id });
+  profileImageURL:{
+    type:String,
+    default:"profile_images/user_placeholder.png",
   }
 });
 
