@@ -6,7 +6,7 @@ export const isLiked = async (req, res) => {
     const { postID, userID } = req.body;
     const like = await likesModel.find({ userID, postID });
     if (!like) {
-      return res.status(200).json({ success: true, message: false });
+      return res.status(400).json({ success: true, message: false });
     }
 
     res.status(200).json({ success: true, message: true });
