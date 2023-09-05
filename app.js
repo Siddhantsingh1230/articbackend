@@ -8,6 +8,7 @@ import usersRouter from "./routes/Users.js";
 import settingRouter from "./routes/Setting.js";
 import postsRouter from "./routes/Posts.js";
 import likesRouter from "./routes/Likes.js";
+import commentsRouter from "./routes/Comments.js";
 import { deleteFile, readFile } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 
@@ -25,6 +26,7 @@ app.use(
       process.env.FRONTEND_URI,
       "http://localhost:5000",
       "http://localhost:3000",
+      "https://articverse.cyclic.app",
     ],
     method: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
@@ -36,6 +38,7 @@ app.use("/users", usersRouter);
 app.use("/setting", settingRouter);
 app.use("/posts", postsRouter);
 app.use("/likes", likesRouter);
+app.use("/comments", commentsRouter);
 
 //environment variables
 configDotenv({
