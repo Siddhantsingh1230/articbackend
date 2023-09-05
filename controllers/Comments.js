@@ -8,19 +8,7 @@ export const getAllComments = async (req, res) => {
     if (comments.length === 0) {
       return res.status(404).json({ success: true, message: "No comments" });
     }
-    let profileURLArray = [];
-    for (const comment of comments) {
-      const user = await usersModel.findById({ _id: comment.userID });
-      const { data } = axios.get(
-        `https://articverse.cyclic.app/read/${user.profileImageURL}`,
-        {
-          withCredentials: true,
-        }
-      );
-      profileURLArray.push(data.fileUrl);
-    }
-
-    res.status(200).json({ success: true, comments, profileURLArray });
+    res.status(200).json({ success: true, comments });
   } catch (error) {
     return res.status(404).json({ success: false, message: error });
   }
