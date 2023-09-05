@@ -30,7 +30,7 @@ export const liked = async (req,res) =>{
 
 export const unliked = async (req,res) =>{
     const {userID,postID} = req.body;
-    const unliked = await likesModel.findOne({userID,postID});
+    const unliked = await likesModel.findOneAndDelete({userID,postID});
     if(!unliked){
         return res.status(404).json({success:false,message:"Error while unliking"});
     }
