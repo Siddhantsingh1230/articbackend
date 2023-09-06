@@ -9,6 +9,7 @@ import settingRouter from "./routes/Setting.js";
 import postsRouter from "./routes/Posts.js";
 import likesRouter from "./routes/Likes.js";
 import commentsRouter from "./routes/Comments.js";
+import chatRouter from "./routes/Chat.js";
 import { deleteFile, readFile } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 
@@ -39,6 +40,7 @@ app.use("/setting", settingRouter);
 app.use("/posts", postsRouter);
 app.use("/likes", likesRouter);
 app.use("/comments", commentsRouter);
+app.use("/chats", chatRouter);
 
 //environment variables
 configDotenv({
