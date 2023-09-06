@@ -3,6 +3,7 @@ import { usersModel } from "../models/Users.js";
 
 export const getAllContent = async (req, res) => {
   const content = await postsModel.find({});
+  let contentArray = [];
   if (!content) {
     return res
       .status(404)
@@ -12,18 +13,18 @@ export const getAllContent = async (req, res) => {
     const user = usersModel.find({
       _id: post.userID,
     });
-    post["userName"] = user.firstname + " " + user.lastname;
-    post["userProfileLink"] = user.profileImageURL;
+    let obj = {...post,userName:user.firstname + " " + user.lastname,userProfileLink:user.profileImageURL};
     const timeGap = post.createdAt - Date.now();
     const twentyFourHrs = 24 * 60 * 60 * 1000;
     if (timeGap < twentyFourHrs) {
-      post["isNew"] = true;
+      obj = {...obj,isNew:true};
     } else {
-      post["isNew"] = false;
+        obj = {...obj,isNew:false};
     }
+    contentArray.push(obj);
   });
   res.status(200).json({
     success: true,
-    content,
+    content:contentArray,
   });
 };
