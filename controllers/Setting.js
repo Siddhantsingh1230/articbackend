@@ -56,23 +56,19 @@ export const deleteProfile = async (req, res) => {
   // Remove all related Comments
   const comresponse = await commentsModel.deleteMany({ userID: req.user._id });
   if (!comresponse) {
-    return res
-      .status(404)
-      .json({
-        success: false,
-        message: "Error while deleting comments of this user",
-      });
+    return res.status(404).json({
+      success: false,
+      message: "Error while deleting comments of this user",
+    });
   }
 
   //remove all related Likes
   const response = await likesModel.deleteMany({ userID: req.user._id });
   if (!response) {
-    return res
-      .status(404)
-      .json({
-        success: false,
-        message: "Error while deleting likes of this user",
-      });
+    return res.status(404).json({
+      success: false,
+      message: "Error while deleting likes of this user",
+    });
   }
 
   // Remove all related posts
@@ -101,6 +97,10 @@ export const updateProfilePhoto = async (req, res) => {
     key: imagename,
   });
 
+  await commentsModel.updateMany(
+    { userID: user._id },
+    { $set: { userProfileURL: imagename } }
+  );
   const result = await usersModel.findByIdAndUpdate(
     { _id: user._id },
     {
