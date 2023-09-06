@@ -4,6 +4,7 @@ import { bucketModel } from "../models/BucketKeys.js";
 import { postsModel } from "../models/Posts.js";
 import { likesModel } from "../models/Likes.js";
 import { commentsModel } from "../models/Comments.js";
+import { chatModel } from "../models/Chat.js";
 
 export const updateProfile = async (req, res) => {
   const { firstname, lastname, email } = req.body;
@@ -53,6 +54,14 @@ export const deleteProfile = async (req, res) => {
   posts.forEach((post) => {
     deleteFile(post.postURL, res);
   });
+  // remove all related Chats
+  const chatresponse = await chatModel.deleteMany({ userID: req.user._id });
+  if (!chatresponse) {
+    return res.status(404).json({
+      success: false,
+      message: "Error while deleting chats of this user",
+    });
+  }
   // Remove all related Comments
   const comresponse = await commentsModel.deleteMany({ userID: req.user._id });
   if (!comresponse) {
@@ -101,6 +110,11 @@ export const updateProfilePhoto = async (req, res) => {
     { userID: user._id },
     { $set: { userProfileURL: imagename } }
   );
+  await chatModel.updateMany(
+    { userID: user._id },
+    { $set: { userProfileURL: imagename } }
+  );
+
   const result = await usersModel.findByIdAndUpdate(
     { _id: user._id },
     {
