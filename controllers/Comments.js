@@ -15,8 +15,8 @@ export const getAllComments = async (req, res) => {
 };
 
 export const createComment = async (req, res) => {
-  const { postID, userID ,userName,comment } = req.body;
-  const commentres = await commentsModel.create({ userID, postID,userName,comment });
+  const { postID, userID ,userName,comment,userProfileURL } = req.body;
+  const commentres = await commentsModel.create({ userID, postID,userName,comment,userProfileURL });
   if (!commentres) {
     return res.status(404).json({ success: false, message: "Comment failed" });
   }

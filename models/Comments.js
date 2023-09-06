@@ -10,6 +10,10 @@ const commentsSchema = new mongoose.Schema({
     type:String,
     required: true,
   },
+  userProfileURL:{
+    type:String,
+    required: true,
+  },
   postID: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "posts",
