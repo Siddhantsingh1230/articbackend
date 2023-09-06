@@ -10,7 +10,7 @@ export const getAllContent = async (req, res) => {
       .json({ success: false, message: "failed to fetch content" });
   }
   for (const post of content) {
-    const user = await usersModel.find({
+    const user = await usersModel.findById({
       _id: post.userID,
     });
     let obj = {...post.toObject(),userName:user.firstname + " " + user.lastname,userProfileLink:user.profileImageURL};
