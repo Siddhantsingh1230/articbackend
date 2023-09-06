@@ -13,8 +13,7 @@ export const getAllContent = async (req, res) => {
     const user = await usersModel.find({
       _id: post.userID,
     });
-    let obj = post.toObject();
-    obj = {...obj,userName:user.firstname + " " + user.lastname,userProfileLink:user.profileImageURL};
+    let obj = {...post,userName:user.firstname + " " + user.lastname,userProfileLink:user.profileImageURL};
     const timeGap = post.createdAt - Date.now();
     const twentyFourHrs = 24 * 60 * 60 * 1000;
     if (timeGap < twentyFourHrs) {
