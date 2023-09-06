@@ -17,9 +17,9 @@ export const getAllContent = async (req, res) => {
     const timeGap = post.createdAt - Date.now();
     const twentyFourHrs = 24 * 60 * 60 * 1000;
     if (timeGap < twentyFourHrs) {
-      post[isNew] = true;
+      post["isNew"] = true;
     } else {
-      post[isNew] = false;
+      post["isNew"] = false;
     }
   });
   res.status(200).json({
