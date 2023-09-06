@@ -12,8 +12,8 @@ export const getAllContent = async (req, res) => {
     const user = usersModel.find({
       _id: post.userID,
     });
-    post[userName] = user.firstname + " " + user.lastname;
-    post[userProfileLink] = user.profileImageURL;
+    post["userName"] = user.firstname + " " + user.lastname;
+    post["userProfileLink"] = user.profileImageURL;
     const timeGap = post.createdAt - Date.now();
     const twentyFourHrs = 24 * 60 * 60 * 1000;
     if (timeGap < twentyFourHrs) {
