@@ -9,11 +9,12 @@ export const getAllContent = async (req, res) => {
       .status(404)
       .json({ success: false, message: "failed to fetch content" });
   }
-  content.forEach((post) => {
-    const user = usersModel.find({
+  content.forEach(async (post) => {
+    const user = await usersModel.find({
       _id: post.userID,
     });
-    let obj = {...post,userName:user.firstname + " " + user.lastname,userProfileLink:user.profileImageURL};
+    let obj = post.toObject();
+    obj = {...obj,userName:user.firstname + " " + user.lastname,userProfileLink:user.profileImageURL};
     const timeGap = post.createdAt - Date.now();
     const twentyFourHrs = 24 * 60 * 60 * 1000;
     if (timeGap < twentyFourHrs) {
