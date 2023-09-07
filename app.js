@@ -14,11 +14,13 @@ import contentRouter from "./routes/Content.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 import { chatModel } from "./models/Chat.js";
+import { createServer } from "http";
 import { Server } from 'socket.io';
 
 // App
 export const app = express();
-const io = new Server(5000);
+export const server = createServer(app);
+const io = new SocketIOServer(server);
 
 // Middlewares
 app.use(express.json());
