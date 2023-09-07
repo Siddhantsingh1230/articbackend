@@ -5,7 +5,7 @@ export const getAllContent = async (req, res) => {
   const { item } = req.params;
   let items = 10 * item;
   let length = 0;
-  const content = await postsModel.find({}).limit(items);
+  const content = await postsModel.find({}).sort({ createdAt: -1 }).limit(items);
   if(item==1){
    length = await postsModel.countDocuments({});
   }
