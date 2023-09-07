@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
     try {
       let chats = [];
       chats = await  chatModel.find({});
-      io.emit("messageReceive", chat);
+      io.emit("messageReceive", chats);
     } catch (error) {
       console.error(error);
     }
