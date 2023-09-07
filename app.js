@@ -40,23 +40,7 @@ app.use(
   })
 );
 
-//initialize socket 
-io.on("connection", (socket) => {
-  console.log("User connected");
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
-  socket.on("messageSend", async () => {
-    console.log("Added Chat");
-    try {
-      let chats = [];
-      chats = await  chatModel.find({});
-      io.emit("messageReceive", chats);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-});
+
 
 // Routes
 app.use("/users", usersRouter);
@@ -108,6 +92,24 @@ app.post("/imgupload",uploadDefaultImageToProfileImages.single("image"),(req,res
   }
   return res.status(200).json({success:true,message:`File Uploaded ${req.imagename}`});
 })
+
+//initialize socket 
+io.on("connection", (socket) => {
+  console.log("User connected");
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
+  socket.on("messageSend", async () => {
+    console.log("Added Chat");
+    try {
+      let chats = [];
+      chats = await  chatModel.find({});
+      io.emit("messageReceive", chats);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
 
 //Error middlewares
 app.use(errorMiddleware);
