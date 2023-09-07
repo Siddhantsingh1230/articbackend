@@ -18,7 +18,7 @@ import { Server } from 'socket.io';
 
 // App
 export const app = express();
-const io = new Server(5002);
+const io = new Server(5000);
 
 // Middlewares
 app.use(express.json());
