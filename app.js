@@ -20,7 +20,18 @@ import { Server } from 'socket.io';
 // App
 export const app = express();
 export const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server,{
+  cors: {
+    origin: [
+      process.env.FRONTEND_URI,
+      "http://localhost:5000",
+      "http://localhost:3000",
+      "https://articverse.cyclic.app",
+    ],
+    method: ["GET", "POST", "DELETE", "PUT"],
+    credentials: true,
+  }
+});
 
 // Middlewares
 app.use(express.json());
