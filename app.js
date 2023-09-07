@@ -11,7 +11,7 @@ import likesRouter from "./routes/Likes.js";
 import commentsRouter from "./routes/Comments.js";
 import chatRouter from "./routes/Chat.js";
 import contentRouter from "./routes/Content.js";
-import { deleteFile, readFile } from "./utils/aws_bucket_services.js";
+import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 
 // App
@@ -78,6 +78,13 @@ app.get("/deleteBucket", async (req, res) => {
   }
   res.status(200).json({ success: true, message: "Deleted Bucket" });
 });
+
+app.post("/imgupload",uploadDefaultImageToProfileImages.single("image"),(req,res)=>{
+  if(!req.file){
+    return res.status(404).json({success:false,message:"no img provided"});
+  }
+  return res.status(200).json({success:true,message:`File Uploaded ${req.imagename}`});
+})
 
 //Error middlewares
 app.use(errorMiddleware);

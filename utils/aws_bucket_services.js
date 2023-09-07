@@ -107,3 +107,19 @@ export const uploadImageToPosts = multer({
   }),
 });
 
+export const uploadDefaultImageToProfileImages = multer({
+  storage: multerS3({
+    s3: s3Client,
+    bucket: process.env.CYCLIC_BUCKET_NAME,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      const fileName =
+        "profile_images/user_placeholder.png" +
+      cb(null, fileName);
+      console.log(fileName);
+      req.imagename = fileName;
+    },
+  }),
+});
