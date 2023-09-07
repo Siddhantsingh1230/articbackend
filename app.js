@@ -13,13 +13,14 @@ import chatRouter from "./routes/Chat.js";
 import contentRouter from "./routes/Content.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
-import { initializeSocket } from "./controllers/Chat.js";
-import socketIo from'socket.io';
+import { chatModel } from "./models/Chat.js";
+import { createServer } from 'http';
+import { Server } from 'socket.io';
 
 // App
 export const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
+const server = createServer(app);
+const io = new Server(server);
 
 // Middlewares
 app.use(express.json());
@@ -40,7 +41,21 @@ app.use(
 );
 
 //initialize socket 
-initializeSocket(io);
+io.on("connection", (socket) => {
+  console.log("User connected");
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
+  socket.on("messageSend", async () => {
+    try {
+      let chats = [];
+      chats = await  chatModel.find({});
+      io.emit("messageReceive", chat);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
 
 // Routes
 app.use("/users", usersRouter);
