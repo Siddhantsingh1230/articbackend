@@ -13,25 +13,11 @@ import chatRouter from "./routes/Chat.js";
 import contentRouter from "./routes/Content.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
-import { chatModel } from "./models/Chat.js";
-import { createServer } from "http";
-import { Server } from 'socket.io';
+
 
 // App
 export const app = express();
-export const server = createServer(app);
-const io = new Server(server,{
-  cors: {
-    origin: [
-      process.env.FRONTEND_URI,
-      "http://localhost:5000",
-      "http://localhost:3000",
-      "https://articverse.cyclic.app",
-    ],
-    method: ["GET", "POST", "DELETE", "PUT"],
-    credentials: true,
-  }
-});
+
 
 // Middlewares
 app.use(express.json());
@@ -52,23 +38,6 @@ app.use(
 );
 
 
-//initialize socket 
-io.on("connection", (socket) => {
-  console.log("User connected");
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
-  socket.on("messageSend", async () => {
-    console.log("Added Chat");
-    try {
-      let chats = [];
-      chats = await  chatModel.find({});
-      io.emit("messageReceive", chats);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-});
 
 // Routes
 app.use("/users", usersRouter);

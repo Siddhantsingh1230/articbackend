@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
-import { server } from "../app.js";
+import { app } from "../app.js";
 
 export const connectDBAndListen = () => {
   mongoose
     .connect(process.env.MONGODB_URI)
     .then(() => {
       console.log("DB Online");
-      server.listen(process.env.PORT, () => {
+      app.listen(process.env.PORT, () => {
         console.log(`App running on PORT ${process.env.PORT}`);
       });
     })
