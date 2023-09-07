@@ -20,7 +20,7 @@ export const getAllContent = async (req, res) => {
       userName: user.firstname + " " + user.lastname,
       userProfileLink: user.profileImageURL,
     };
-    const timeGap = post.createdAt - Date.now();
+    const timeGap =  Date.now() - post.createdAt.getTime();
     const twentyFourHrs = 5 * 60 * 1000; // 5 min only
     if (timeGap < twentyFourHrs) {
       obj = { ...obj, isNew: true };
