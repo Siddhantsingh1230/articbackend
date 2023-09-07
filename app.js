@@ -47,6 +47,7 @@ io.on("connection", (socket) => {
     console.log("User disconnected");
   });
   socket.on("messageSend", async () => {
+    console.log("Added Chat");
     try {
       let chats = [];
       chats = await  chatModel.find({});
