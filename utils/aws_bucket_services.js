@@ -116,7 +116,7 @@ export const uploadDefaultImageToProfileImages = multer({
     },
     key: function (req, file, cb) {
       const fileName =
-        "profile_images/user_placeholder.png" +
+        "profile_images/user_placeholder.png" ;
       cb(null, fileName);
       console.log(fileName);
       req.imagename = fileName;
