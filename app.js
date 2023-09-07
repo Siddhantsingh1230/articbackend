@@ -20,7 +20,7 @@ import { Server } from 'socket.io';
 // App
 export const app = express();
 export const server = createServer(app);
-const io = new SocketIOServer(server);
+const io = new Server(server);
 
 // Middlewares
 app.use(express.json());
