@@ -14,13 +14,11 @@ import contentRouter from "./routes/Content.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 import { chatModel } from "./models/Chat.js";
-import { createServer } from 'http';
 import { Server } from 'socket.io';
 
 // App
 export const app = express();
-const server = createServer(app);
-const io = new Server(server);
+const io = new Server(5002);
 
 // Middlewares
 app.use(express.json());
@@ -41,6 +39,23 @@ app.use(
 );
 
 
+//initialize socket 
+io.on("connection", (socket) => {
+  console.log("User connected");
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
+  socket.on("messageSend", async () => {
+    console.log("Added Chat");
+    try {
+      let chats = [];
+      chats = await  chatModel.find({});
+      io.emit("messageReceive", chats);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+});
 
 // Routes
 app.use("/users", usersRouter);
@@ -93,22 +108,6 @@ app.post("/imgupload",uploadDefaultImageToProfileImages.single("image"),(req,res
   return res.status(200).json({success:true,message:`File Uploaded ${req.imagename}`});
 })
 
-//initialize socket 
-io.on("connection", (socket) => {
-  console.log("User connected");
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
-  socket.on("messageSend", async () => {
-    console.log("Added Chat");
-    try {
-      let chats = [];
-      chats = await  chatModel.find({});
-      io.emit("messageReceive", chats);
-    } catch (error) {
-      console.error(error);
-    }
-  });
-});
+
 //Error middlewares
 app.use(errorMiddleware);
