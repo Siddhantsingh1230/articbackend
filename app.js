@@ -13,9 +13,13 @@ import chatRouter from "./routes/Chat.js";
 import contentRouter from "./routes/Content.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
+import { initializeSocket } from "./controllers/Chat.js";
+import socketIo from'socket.io';
 
 // App
 export const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 
 // Middlewares
 app.use(express.json());
@@ -34,6 +38,9 @@ app.use(
     credentials: true,
   })
 );
+
+//initialize socket 
+initializeSocket(io);
 
 // Routes
 app.use("/users", usersRouter);
