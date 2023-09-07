@@ -110,6 +110,5 @@ io.on("connection", (socket) => {
     }
   });
 });
-
 //Error middlewares
 app.use(errorMiddleware);
