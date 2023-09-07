@@ -4,7 +4,11 @@ import { usersModel } from "../models/Users.js";
 export const getAllContent = async (req, res) => {
   const { item } = req.params;
   let items = 10 * item;
+  let length = 0;
   const content = await postsModel.find({}).limit(items);
+  if(item==1){
+   length = await postsModel.countDocuments({});
+  }
   let contentArray = [];
   if (!content) {
     return res
@@ -28,6 +32,13 @@ export const getAllContent = async (req, res) => {
       obj = { ...obj, isNew: false };
     }
     contentArray.push(obj);
+  }
+  if(item==1){
+    res.status(200).json({
+      success: true,
+      content: contentArray,
+      length,
+    });
   }
   res.status(200).json({
     success: true,
