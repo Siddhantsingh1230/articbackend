@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { usersModel } from "../models/Users";
+import { usersModel } from "../models/Users.js";
 
 export const forgotpwd = async (req,res)=>{
     const {email} = req.body;
