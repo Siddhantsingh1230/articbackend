@@ -18,17 +18,17 @@ export const verifyEmail = async (req, res, next) => {
           .json({ success: false, message: "Can't verify" });
       }
       if (
-        data.formatCheck === "true" &&
-        data.smtpCheck === "true" &&
-        data.dnsCheck === "true"
+        data.formatCheck !== "true" &&
+        data.smtpCheck !== "true" &&
+        data.dnsCheck !== "true"
       ) {
-        next();
-      } else {
         return res
-          .status(404)
-          .json({ success: false, message: "Invalid Email" });
-      }
+        .status(404)
+        .json({ success: false, message: "Invalid Email" });
+        
+      } 
     });
+    next();
   } catch (e) {
     return res.status(404).json({ success: false, message: `Cant verify${e}` });
   }
