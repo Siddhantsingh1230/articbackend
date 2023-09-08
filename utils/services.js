@@ -36,11 +36,12 @@ export const sendRegMail = (name, date, from, pass, recipient, sub) => {
   console.log("Reg start called-",name,from,pass,recipient,sub);
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
-    service: "Gmail", // e.g., 'Gmail', 'Outlook'
+    host: 'smtp.ethereal.email',
+    port: 587,
     auth: {
-      user: from,
-      pass: pass,
-    },
+        user: 'aileen.hahn@ethereal.email',
+        pass: 'CmTQZhXG1a7rVa5V3n'
+    }
   });
 
   // Compile the EJS template
