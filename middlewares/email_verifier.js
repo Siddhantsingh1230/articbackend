@@ -10,7 +10,7 @@ export const verifyEmail = async (req, res, next) => {
     validateSMTP: true,
   });
   verifier.verify(email, (err, data) => {
-    console.log(data);
+    // console.log(data);
     if (err) {
       return res.status(404).json({ success: false, message: "Can't verify" });
     }
