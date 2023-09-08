@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import path from "path";
 import { configDotenv } from "dotenv";
 import cookieParser from "cookie-parser";
@@ -11,6 +11,7 @@ import likesRouter from "./routes/Likes.js";
 import commentsRouter from "./routes/Comments.js";
 import chatRouter from "./routes/Chat.js";
 import contentRouter from "./routes/Content.js";
+import forgotPWDRouter from "./routes/ForgotPwd.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 
@@ -21,6 +22,7 @@ export const app = express();
 
 // Middlewares
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
 app.use(cookieParser());
 app.use(express.static(path.join(path.resolve(), "public")));
 app.set("view engine", "ejs");
@@ -47,6 +49,7 @@ app.use("/likes", likesRouter);
 app.use("/comments", commentsRouter);
 app.use("/chats", chatRouter);
 app.use("/content", contentRouter);
+app.use("/factory", forgotPWDRouter);
 
 //environment variables
 configDotenv({

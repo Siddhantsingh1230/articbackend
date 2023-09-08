@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/factory/resetpassword" method="POST">
+      <input type="text" />
+      <input type="text" />
+      <button type="submit"></button>
+    </form>
+    <script>
+      // Function to parse query parameters from the URL
+      function getQueryParameters() {
+        let queryParams = {};
+        let queryString = window.location.search.substring(1);
+        let params = queryString.split("&");
+        for (let i = 0; i < params.length; i++) {
+          let param = params[i].split("=");
+          queryParams[param[0]] = decodeURIComponent(param[1]);
+        }
+        return queryParams;
+      }
+
+      // Call the function to get the query parameters
+      let queryParams = getQueryParameters();
+
+      // Access and use the query parameters
+      let id = queryParams.id;
+      let token = queryParams.token;
+
+      // Example: Display the tokens in an alert
+      alert("ID: " + id + "\ntoken: " + token);
+    </script>
+  </body>
+</html>
