@@ -5,12 +5,13 @@ export const getAllContent = async (req, res) => {
   const { item } = req.params;
   let items = 10 * item;
   let length = 0;
-  const content = await postsModel.find({}).sort({ createdAt: -1 }).limit(items);
+  let content = [];
+  content = await postsModel.find({}).sort({ createdAt: -1 }).limit(items);
   if(item==1){
    length = await postsModel.countDocuments({});
   }
   let contentArray = [];
-  if (!content) {
+  if (content.length==0) {
     return res
       .status(404)
       .json({ success: false, message: "failed to fetch content" });
