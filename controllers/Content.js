@@ -35,7 +35,7 @@ export const getAllContent = async (req, res) => {
     contentArray.push(obj);
   }
   if(item==1){
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       content: contentArray,
       length,
