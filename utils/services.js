@@ -33,6 +33,7 @@ export const sendCookie = (
 
 // Sends mail on successful registration
 export const sendRegMail = (name, date, from, pass, recipient, sub) => {
+  console.log("Reg start called");
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
     service: "Gmail", // e.g., 'Gmail', 'Outlook'
@@ -80,5 +81,5 @@ export const sendRegMail = (name, date, from, pass, recipient, sub) => {
       }
     });
   });
-  console.log("Reg called");
+  console.log("Reg last called");
 };
