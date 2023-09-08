@@ -15,7 +15,7 @@ export const forgotpwd = async (req,res)=>{
     const token = jwt.sign(payload,secret,{expiresIn:"15m"});
     const link = `https:articverse.cyclic.cloud/resetpwd.html/?id=${user._id}&token=${token}`;
     console.log(link);
-    res.send("password resent send ",link);
+    res.send("password resent send "+ link);
     
 }
 export const resetpwd = async (req,res)=>{
