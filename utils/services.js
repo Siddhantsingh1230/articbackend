@@ -35,12 +35,11 @@ export const sendCookie = (
 export const sendRegMail = (name, date, from, pass, recipient, sub) => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
-    host: 'smtp.ethereal.email',
-    port: 587,
+    service: "Gmail", // e.g., 'Gmail', 'Outlook'
     auth: {
-        user: 'aileen.hahn@ethereal.email',
-        pass: 'CmTQZhXG1a7rVa5V3n'
-    }
+      user: from,
+      pass: pass,
+    },
   });
 
   // Compile the EJS template
