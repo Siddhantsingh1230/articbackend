@@ -35,7 +35,9 @@ export const sendCookie = (
 export const sendRegMail = (name, date, from, pass, recipient, sub) => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
-    service: "Gmail", // e.g., 'Gmail', 'Outlook'
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
     auth: {
       user: from,
       pass: pass,
