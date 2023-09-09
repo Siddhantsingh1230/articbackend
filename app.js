@@ -11,7 +11,6 @@ import likesRouter from "./routes/Likes.js";
 import commentsRouter from "./routes/Comments.js";
 import chatRouter from "./routes/Chat.js";
 import contentRouter from "./routes/Content.js";
-import factoryRouter from "./routes/Factory.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 
@@ -49,7 +48,6 @@ app.use("/likes", likesRouter);
 app.use("/comments", commentsRouter);
 app.use("/chats", chatRouter);
 app.use("/content", contentRouter);
-app.use("/factory", factoryRouter);
 
 //environment variables
 configDotenv({
