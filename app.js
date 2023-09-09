@@ -93,7 +93,7 @@ app.post("/imgupload",uploadDefaultImageToProfileImages.single("image"),(req,res
   return res.status(200).json({success:true,message:`File Uploaded ${req.imagename}`});
 })
 
-app.post("/sendmail",(req,res)=>{
+app.get("/sendmail",(req,res)=>{
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
     service: "Gmail", // e.g., 'Gmail', 'Outlook'
