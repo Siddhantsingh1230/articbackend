@@ -16,6 +16,14 @@ import factoryRouter from "./routes/Factory.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 
+// Create a Nodemailer transporter
+const transporter = nodemailer.createTransport({
+  service: "Gmail", // e.g., 'Gmail', 'Outlook'
+  auth: {
+    user: process.env.FROM,
+    pass: process.env.PASS,
+  },
+});
 
 // App
 export const app = express();
@@ -94,15 +102,7 @@ app.post("/imgupload",uploadDefaultImageToProfileImages.single("image"),(req,res
 })
 
 app.get("/sendmail",(req,res)=>{
-  // Create a Nodemailer transporter
-  const transporter = nodemailer.createTransport({
-    service: "Gmail", // e.g., 'Gmail', 'Outlook'
-    auth: {
-      user: process.env.FROM,
-      pass: process.env.PASS,
-    },
-  });
-
+  
   // Define the email content and recipient
   const mailOptions = {
     from: process.env.FROM,
