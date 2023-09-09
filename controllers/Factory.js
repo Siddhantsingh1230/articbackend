@@ -10,7 +10,7 @@ export const forgotpwd = async (req,res)=>{
     }
     const secret =  process.env.JWT_KEY + user.password;
     const payload = {
-        email:user.email,
+        email,
         _id:user._id,
     }
     const token = jwt.sign(payload,secret,{expiresIn:"15m"});
