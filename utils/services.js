@@ -30,19 +30,6 @@ export const sendCookie = (
       user,
     });
 };
-export const sendEmptyCookie = (res, id, obj) => {
-  const token = id;
-  let timeout = 15;
-  res
-    .status(200)
-    .cookie("token", token, {
-      httpOnly: true,
-      maxAge: timeout * 60 * 1000,
-      sameSite: "none",
-      secure: true,
-    })
-    .json(obj);
-};
 
 // Sends mail on successful registration
 export const sendRegMail = (name, date, from, pass, recipient, sub) => {
