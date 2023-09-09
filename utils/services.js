@@ -84,7 +84,7 @@ export const sendRegMail = (name, date, from, pass, recipient, sub) => {
 };
 
 // Reset Pwd Mail
-export const sendResetMail = (name, date, from, pass, recipient, sub,link) => {
+export const sendResetMail = (name, date, from, pass, recipient, sub, link) => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
     service: "Gmail", // e.g., 'Gmail', 'Outlook'
@@ -99,9 +99,11 @@ export const sendResetMail = (name, date, from, pass, recipient, sub,link) => {
     from: from,
     to: recipient,
     subject: sub,
-    html: `<h1>Hello ${name} This is One-Time Link to reset password - ${date}. Link will get expire in 15m .</h1><a href="${link}" >Cick Here.</a> `,
   };
 
+  const html = `<h1>Hello ${name} This is One-Time Link to reset password - ${date}. Link will get expire in 15m .</h1><a href="${link}" >Cick Here.</a> `;
+
+  mailOptions.html = html;
   // Send the email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
