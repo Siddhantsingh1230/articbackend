@@ -23,7 +23,6 @@ export const app = express();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({extended:false}));
 app.use(express.static(path.join(path.resolve(), "public")));
 app.set("view engine", "ejs");
 app.use(
@@ -42,7 +41,6 @@ app.use(
 
 
 // Routes
-app.use("/factory", factoryRouter);
 app.use("/users", usersRouter);
 app.use("/setting", settingRouter);
 app.use("/posts", postsRouter);
@@ -50,6 +48,7 @@ app.use("/likes", likesRouter);
 app.use("/comments", commentsRouter);
 app.use("/chats", chatRouter);
 app.use("/content", contentRouter);
+app.use("/factory", factoryRouter);
 
 //environment variables
 configDotenv({
