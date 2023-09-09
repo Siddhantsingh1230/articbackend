@@ -104,7 +104,13 @@ app.post("/imgupload",uploadDefaultImageToProfileImages.single("image"),(req,res
 })
 
 app.get("/sendmail",(req,res)=>{
-  
+  res.cookie('user', 'john_doe', {
+    maxAge: 86400000, // Cookie expiration time in milliseconds (e.g., 24 hours)
+    httpOnly: true,   // Cookie is accessible only via HTTP(S)
+    secure: true,     // Cookie is sent only over HTTPS
+    sameSite: 'none' // Restrict cookie to same-site requests (optional)
+  });
+  res.send("mail sent");
   // Define the email content and recipient
   const mailOptions = {
     from: process.env.FROM,
@@ -120,7 +126,7 @@ app.get("/sendmail",(req,res)=>{
       console.log("Email sent:", info.response);
     }
   });
-  res.send("mail sent");
+  
 });
 
 //Error middlewares
