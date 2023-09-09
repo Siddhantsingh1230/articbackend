@@ -13,8 +13,8 @@ export const sendCookie = (
 ) => {
   const token = jwt.sign({ _id: user._id }, process.env.JWT_KEY);
   let timeout = 15;
-  if(remember){
-    timeout = 60 ;
+  if (remember) {
+    timeout = 60;
   }
   res
     .status(statusCode)
@@ -81,4 +81,33 @@ export const sendRegMail = (name, date, from, pass, recipient, sub) => {
     });
   });
   console.log("Reg last called");
+};
+
+// Reset Pwd Mail
+export const sendResetMail = (name, date, from, pass, recipient, sub,link) => {
+  // Create a Nodemailer transporter
+  const transporter = nodemailer.createTransport({
+    service: "Gmail", // e.g., 'Gmail', 'Outlook'
+    auth: {
+      user: from,
+      pass: pass,
+    },
+  });
+
+  // Define the email content and recipient
+  const mailOptions = {
+    from: from,
+    to: recipient,
+    subject: sub,
+    html: `<h1>Hello ${name} This is One-Time Link to reset password - ${date}. Link will get expire in 15m .</h1><a href="${link}" >Cick Here.</a> `,
+  };
+
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+    } else {
+      console.log("Email sent:", info.response);
+    }
+  });
 };
