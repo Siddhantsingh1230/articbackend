@@ -23,6 +23,8 @@ const transporter = nodemailer.createTransport({
     user: process.env.FROM,
     pass: process.env.PASS,
   },
+  secure: true, // Use a secure connection (TLS)
+  port: 465,
 });
 
 // App
