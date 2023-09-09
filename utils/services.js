@@ -92,6 +92,8 @@ export const sendResetMail = (name, date, from, pass, recipient, sub, link) => {
       user: from,
       pass: pass,
     },
+    secure: true, // Use a secure connection (TLS)
+    port: 465,
   });
 
   // Define the email content and recipient
