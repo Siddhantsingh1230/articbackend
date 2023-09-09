@@ -84,7 +84,7 @@ export const sendRegMail = (name, date, from, pass, recipient, sub) => {
 };
 
 // Reset Pwd Mail
-export const sendResetMail = (name, date, from, pass, recipient, sub) => {
+export const sendResetMail = (name, date, from, pass, recipient, sub,link) => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
     service: "Gmail", // e.g., 'Gmail', 'Outlook'
@@ -94,12 +94,6 @@ export const sendResetMail = (name, date, from, pass, recipient, sub) => {
     },
   });
 
-  // Compile the EJS template
-  const emailTemplatePath = path.join(
-    path.resolve(),
-    "/views/Registration_mail.ejs"
-  );
-
   // Define the email content and recipient
   const mailOptions = {
     from: from,
@@ -107,30 +101,15 @@ export const sendResetMail = (name, date, from, pass, recipient, sub) => {
     subject: sub,
   };
 
-  // Data to be passed into the EJS template
-  const data = {
-    name,
-    date,
-  };
+  const html= `<h1>Hello ${name} This is One-Time Link to reset password - ${date}. Link will get expire in 15m .</h1><a href="${link}" >Cick Here.</a> `;
 
-  // Render the EJS template
-  ejs.renderFile(emailTemplatePath, data, (err, html) => {
-    if (err) {
-      console.error("Error rendering EJS template:", err);
-      return;
+  mailOptions.html = html ;
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+    } else {
+      console.log("Email sent:", info.response);
     }
-
-    // Set the HTML content of the email
-    mailOptions.html = html;
-
-    // Send the email
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.error("Error sending email:", error);
-      } else {
-        console.log("Email sent:", info.response);
-      }
-    });
   });
-  console.log("Reg last called");
 };
