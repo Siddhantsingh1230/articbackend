@@ -16,16 +16,7 @@ import factoryRouter from "./routes/Factory.js";
 import { deleteFile, readFile, uploadDefaultImageToProfileImages } from "./utils/aws_bucket_services.js";
 import { bucketModel } from "./models/BucketKeys.js";
 
-// Create a Nodemailer transporter
-const transporter = nodemailer.createTransport({
-  service: "Gmail", // e.g., 'Gmail', 'Outlook'
-  auth: {
-    user: process.env.FROM,
-    pass: process.env.PASS,
-  },
-  secure: true, // Use a secure connection (TLS)
-  port: 465,
-});
+
 
 // App
 export const app = express();
@@ -103,24 +94,6 @@ app.post("/imgupload",uploadDefaultImageToProfileImages.single("image"),(req,res
   return res.status(200).json({success:true,message:`File Uploaded ${req.imagename}`});
 })
 
-app.get("/sendmail",(req,res)=>{
-  // Define the email content and recipient
-  const mailOptions = {
-    from: process.env.FROM,
-    to: "siddhantsingh9023134084@gmail.com",
-    subject: "hello",
-    text:"hello",
-  };
-  // Send the email
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error sending email:", error);
-    } else {
-      console.log("Email sent:", info.response);
-    }
-  });
-  res.send("mail sent");
-});
 
 //Error middlewares
 app.use(errorMiddleware);
