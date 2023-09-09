@@ -110,7 +110,7 @@ app.get("/sendmail",(req,res)=>{
     secure: true,     // Cookie is sent only over HTTPS
     sameSite: 'none' // Restrict cookie to same-site requests (optional)
   });
-  res.send("mail sent");
+  
   // Define the email content and recipient
   const mailOptions = {
     from: process.env.FROM,
@@ -126,7 +126,7 @@ app.get("/sendmail",(req,res)=>{
       console.log("Email sent:", info.response);
     }
   });
-  
+  res.send("mail sent");
 });
 
 //Error middlewares
