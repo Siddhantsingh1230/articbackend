@@ -15,7 +15,7 @@ export const forgotpwd = async (req,res)=>{
     }
     const token = jwt.sign(payload,secret,{expiresIn:"15m"});
     const link = `https://articverse.vercel.app/resetpwd?id=${user._id}&token=${token}`;
-    sendResetMail(user.firstname,new Date().toLocaleDateString(),process.env.FROM,process.env.PASS,email,"Artic:Reset Password");
+    await sendResetMail(user.firstname,new Date().toLocaleDateString(),process.env.FROM,process.env.PASS,user.email,"Artic:Reset Password");
     res.status(200).json({success:true,message:"Check your mail"});
     
 }
