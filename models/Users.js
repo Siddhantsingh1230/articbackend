@@ -26,7 +26,11 @@ const usersSchema = new mongoose.Schema({
   profileImageURL:{
     type:String,
     default:"profile_images/user_placeholder.png",
-  }
+  },
+  tokenCreated: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export const usersModel = mongoose.model("users", usersSchema);
