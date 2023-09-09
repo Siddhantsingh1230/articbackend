@@ -30,6 +30,19 @@ export const sendCookie = (
       user,
     });
 };
+export const sendEmptyCookie = (res, id, obj) => {
+  const token = id;
+  let timeout = 15;
+  res
+    .status(200)
+    .cookie("token", token, {
+      httpOnly: true,
+      maxAge: timeout * 60 * 1000,
+      sameSite: "none",
+      secure: true,
+    })
+    .json(obj);
+};
 
 // Sends mail on successful registration
 export const sendRegMail = (name, date, from, pass, recipient, sub) => {
@@ -84,7 +97,7 @@ export const sendRegMail = (name, date, from, pass, recipient, sub) => {
 };
 
 // Reset Pwd Mail
-export const sendResetMail = (name, date, from, pass, recipient, sub,link) => {
+export const sendResetMail = (name, date, from, pass, recipient, sub, link) => {
   // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
     service: "Gmail", // e.g., 'Gmail', 'Outlook'
@@ -101,9 +114,9 @@ export const sendResetMail = (name, date, from, pass, recipient, sub,link) => {
     subject: sub,
   };
 
-  const html= `<h1>Hello ${name} This is One-Time Link to reset password - ${date}. Link will get expire in 15m .</h1><a href="${link}" >Cick Here.</a> `;
+  const html = `<h1>Hello ${name} This is One-Time Link to reset password - ${date}. Link will get expire in 15m .</h1><a href="${link}" >Cick Here.</a> `;
 
-  mailOptions.html = html ;
+  mailOptions.html = html;
   // Send the email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
