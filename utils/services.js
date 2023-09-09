@@ -99,11 +99,8 @@ export const sendResetMail = (name, date, from, pass, recipient, sub, link) => {
     from: from,
     to: recipient,
     subject: sub,
+    text:`Hello ${name} This is One-Time Link to reset password - ${date}. Link will get expire in 15m . ${link}`
   };
-
-  const html = `<h1>Hello ${name} This is One-Time Link to reset password - ${date}. Link will get expire in 15m .</h1><a href="${link}" >Cick Here.</a> `;
-
-  mailOptions.html = html;
   // Send the email
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
